@@ -6,12 +6,20 @@ import 'dotenv/config';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
-  // Habilita validaciones en todos los controladores
+  // ✅ Habilita CORS para permitir peticiones desde Angular
+  app.enableCors({
+    origin: 'http://localhost:4200', // origen del frontend
+    methods: 'GET,POST,PUT,DELETE,OPTIONS',
+    allowedHeaders: 'Content-Type, Authorization',
+    credentials: true, // si usas cookies o headers de autenticación
+  });
+
+  // ✅ Habilita validaciones en todos los controladores
   app.useGlobalPipes(
     new ValidationPipe({
-      whitelist: true, // elimina propiedades no definidas en el DTO
-      forbidNonWhitelisted: true, // lanza error si hay propiedades desconocidas
-      transform: true, // convierte tipos (string → number, etc.)
+      whitelist: true,
+      forbidNonWhitelisted: true,
+      transform: true,
     }),
   );
 
