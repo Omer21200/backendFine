@@ -1,7 +1,7 @@
 // src/docente/docente.controller.ts
-import { Controller, Post, Body,Get } from '@nestjs/common';
+import { Controller, Post, Body, Get, Patch } from '@nestjs/common';
 import { DocenteService } from './docente.service';
-import { CreateDocenteDto } from './dto/create-docente.dto';
+import { CreateDocenteDto, UpdateDocenteDto } from './dto/create-docente.dto';
 
 @Controller('docentes')
 export class DocenteController {
@@ -15,6 +15,11 @@ export class DocenteController {
     @Get()
     async listar() {
         return await this.docenteService.listarDocentes();
+    }
+
+    @Patch()
+    async actualizarDocente(@Body() dto: UpdateDocenteDto) {
+        return this.docenteService.actualizarDocente(dto);
     }
 
 }

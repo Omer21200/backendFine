@@ -1,7 +1,7 @@
 // src/docente/docente.service.ts
 import { Injectable } from '@nestjs/common';
 import { supabase } from '../supabase/supabase.client';
-import { CreateDocenteDto } from './dto/create-docente.dto';
+import { CreateDocenteDto,UpdateDocenteDto } from './dto/create-docente.dto';
 import { handleSupabaseError } from '../utils/supabase-error-handler';
 
 @Injectable()
@@ -156,5 +156,111 @@ export class DocenteService {
         }
 
         return data;
+    }
+
+    async actualizarDocente(dto: UpdateDocenteDto) {
+        const {
+            docente_id,
+            persona_id,
+            especializaciones,
+            horarios,
+            ...camposPosibles
+        } = dto;
+
+        // 1. Obtener datos actuales
+        const { data: actual, error: errActual } = await supabase
+            .from('docente')
+            .select(`
+      id,
+      experiencia_anios,
+      horas_disponibles,
+      tipo_contrato_id,
+      nivel_ingles_id,
+      persona:persona_id (
+        id,
+        primer_nombre,
+        segundo_nombre,
+        primer_apellido,
+        segundo_apellido,
+        cedula,
+        correo,
+        telefono
+      )
+    `)
+            .eq('id', docente_id)
+            .single();
+
+        if (errActual || !actual) {
+            throw new Error('No se pudo obtener el docente');
+        }
+
+        // 2. Comparar y construir cambios para persona
+        const personaUpdate: any = {};
+        const camposPersona = [
+            'primer_nombre', 'segundo_nombre', 'primer_apellido', 'segundo_apellido',
+            'cedula', 'correo', 'telefono'
+        ];
+
+        for (const campo of camposPersona) {
+            if (
+                dto[campo] !== undefined &&
+                dto[campo] !== actual.persona[campo]
+            ) {
+                personaUpdate[campo] = dto[campo];
+            }
+        }
+
+        if (Object.keys(personaUpdate).length > 0) {
+            const { error } = await supabase
+                .from('persona')
+                .update(personaUpdate)
+                .eq('id', persona_id);
+            if (error) throw new Error('Error al actualizar persona');
+        }
+
+        // 3. Comparar y construir cambios para docente
+        const docenteUpdate: any = {};
+        const camposDocente = [
+            'tipo_contrato_id', 'experiencia_anios', 'nivel_ingles_id', 'horas_disponibles'
+        ];
+
+        for (const campo of camposDocente) {
+            if (
+                dto[campo] !== undefined &&
+                dto[campo] !== actual[campo]
+            ) {
+                docenteUpdate[campo] = dto[campo];
+            }
+        }
+
+        if (Object.keys(docenteUpdate).length > 0) {
+            const { error } = await supabase
+                .from('docente')
+                .update(docenteUpdate)
+                .eq('id', docente_id);
+            if (error) throw new Error('Error al actualizar docente');
+        }
+
+        // 4. Actualizar especializaciones si se proporcionaron
+        if (Array.isArray(especializaciones)) {
+            await supabase.from('docente_especializacion').delete().eq('docente_id', docente_id);
+            const nuevas = especializaciones.map((id) => ({
+                docente_id,
+                especializacion_id: id,
+            }));
+            await supabase.from('docente_especializacion').insert(nuevas);
+        }
+
+        // 5. Actualizar horarios si se proporcionaron
+        if (Array.isArray(horarios)) {
+            await supabase.from('docente_horario').delete().eq('docente_id', docente_id);
+            const nuevos = horarios.map((id) => ({
+                docente_id,
+                horario_id: id,
+            }));
+            await supabase.from('docente_horario').insert(nuevos);
+        }
+
+        return { message: 'Docente actualizado correctamente' };
     }
 }
