@@ -14,7 +14,12 @@ export class DocenteController {
 
     @Get()
     async listar() {
-        return await this.docenteService.listarDocentes();
+        return this.docenteService.listarDocentes();
+    }
+
+    @Get('inactivos')
+    async listarInactivos() {
+        return this.docenteService.listarDocentesInactivos();
     }
 
     @Patch()
@@ -22,4 +27,9 @@ export class DocenteController {
         return this.docenteService.actualizarDocente(dto);
     }
 
+    @Patch('estado')
+    async cambiarEstado(@Body() body: { docente_id: string; activo: boolean }) {
+        const { docente_id, activo } = body;
+        return this.docenteService.activarDesactivarDocente(docente_id, activo);
+    }
 }
