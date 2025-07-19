@@ -218,6 +218,7 @@ export class DocenteService {
         id,
         experiencia_anios,
         horas_disponibles,
+        activo,
         tipo_contrato_id,
         nivel_ingles_id,
         persona:persona_id (
@@ -271,6 +272,7 @@ export class DocenteService {
             'experiencia_anios',
             'nivel_ingles_id',
             'horas_disponibles',
+            'activo',
         ];
 
         for (const campo of camposDocente) {

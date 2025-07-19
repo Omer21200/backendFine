@@ -1,4 +1,4 @@
-import { IsUUID, IsInt, Min, IsString, IsArray, ArrayNotEmpty, IsOptional } from 'class-validator';
+import { IsUUID, IsInt, Min, IsString, IsArray, ArrayNotEmpty, IsOptional, IsBoolean } from 'class-validator';
 
 export class CreateDocenteDto {
   @IsString()
@@ -60,6 +60,7 @@ export class UpdateDocenteDto {
   @IsOptional() @IsString() cedula?: string;
   @IsOptional() @IsString() correo?: string;
   @IsOptional() @IsString() telefono?: string;
+  @IsOptional() @IsBoolean() activo?: boolean;
 
   @IsOptional() @IsUUID() tipo_contrato_id?: string;
   @IsOptional() @IsInt() experiencia_anios?: number;
