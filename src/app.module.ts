@@ -6,10 +6,11 @@ import { UsuarioModule } from './usuario/usuario.module';
 import { AuthModule } from './auth/auth.module';
 import { DocenteModule } from './docente/docente.module';
 import { CatalogoModule } from './catalogo/catalogo.module';
+import { DashboardModule } from './dashboard/dashboard.module';
 
 
 @Module({
-  imports: [ProgramasModule, UsuarioModule, AuthModule, DocenteModule, CatalogoModule],
+  imports: [ProgramasModule, UsuarioModule, AuthModule, DocenteModule, CatalogoModule, DashboardModule],
   controllers: [AppController],
   providers: [AppService],
 })
