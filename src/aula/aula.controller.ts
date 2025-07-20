@@ -24,6 +24,12 @@ export class AulaController {
     return this.aulaService.listarAulasDisponibles();
   }
 
+  @Get('eliminadas')
+  @HttpCode(200)
+  async listarEliminadas() {
+    return this.aulaService.listarAulasEliminadas();
+  }
+
   @Get('piso/:piso')
   @HttpCode(200)
   async listarPorPiso(@Param('piso') piso: string) {
@@ -55,12 +61,6 @@ export class AulaController {
   @HttpCode(200)
   async eliminar(@Param('id') id: string) {
     return this.aulaService.eliminarAula(id);
-  }
-
-  @Get('eliminadas')
-  @HttpCode(200)
-  async listarEliminadas() {
-    return this.aulaService.listarAulasEliminadas();
   }
 
   @Patch(':id/restaurar')
