@@ -51,9 +51,9 @@ export class CreateDocenteDto {
   especializaciones: string[];
 
   @IsArray()
-@ArrayNotEmpty()
-@IsUUID('all', { each: true })
-horarios: string[];
+  @ArrayNotEmpty()
+  @IsUUID('all', { each: true })
+  horarios: string[];
 }
 
 export class UpdateDocenteDto {

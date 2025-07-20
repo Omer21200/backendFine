@@ -19,6 +19,8 @@ export class DocenteService {
             experiencia_anios,
             nivel_ingles_id,
             horas_disponibles,
+            max_horas_semanales,
+            puede_dar_sabados,
             especializaciones,
             horarios,
         } = dto;
