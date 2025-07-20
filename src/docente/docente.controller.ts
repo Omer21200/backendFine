@@ -1,5 +1,5 @@
 // src/docente/docente.controller.ts
-import { Controller, Post, Body, Get, Patch } from '@nestjs/common';
+import { Controller, Post, Body, Get, Patch, Param } from '@nestjs/common';
 import { DocenteService } from './docente.service';
 import { CreateDocenteDto, UpdateDocenteDto } from './dto/create-docente.dto';
 
@@ -20,6 +20,11 @@ export class DocenteController {
     @Get('inactivos')
     async listarInactivos() {
         return this.docenteService.listarDocentesInactivos();
+    }
+
+    @Get(':id')
+    async obtenerPorId(@Param('id') id: string) {
+        return this.docenteService.obtenerDocentePorId(id);
     }
 
     @Patch()

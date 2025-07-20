@@ -228,6 +228,8 @@ export class DocenteService {
         id,
         experiencia_anios,
         horas_disponibles,
+        max_horas_semanales,
+        puede_dar_sabados,
         activo,
         tipo_contrato_id,
         nivel_ingles_id,
@@ -282,6 +284,8 @@ export class DocenteService {
             'experiencia_anios',
             'nivel_ingles_id',
             'horas_disponibles',
+            'max_horas_semanales',
+            'puede_dar_sabados',
             'activo',
         ];
 
@@ -334,5 +338,65 @@ export class DocenteService {
         handleSupabaseError(error, 'Actualizar estado docente');
 
         return { message: `Docente ${activo ? 'activado' : 'desactivado'} correctamente` };
+    }
+
+    async obtenerDocentePorId(docente_id: string) {
+        const { data, error } = await supabase
+            .from('docente')
+            .select(`
+                id,
+                experiencia_anios,
+                horas_disponibles,
+                max_horas_semanales,
+                puede_dar_sabados,
+                activo,
+                tipo_contrato_id,
+                nivel_ingles_id,
+                persona:persona_id (
+                    id,
+                    primer_nombre,
+                    segundo_nombre,
+                    primer_apellido,
+                    segundo_apellido,
+                    cedula,
+                    correo,
+                    telefono
+                ),
+                tipo_contrato:tipo_contrato_id (
+                    nombre
+                ),
+                nivel_ingles:nivel_ingles_id (
+                    nombre
+                ),
+                especializaciones:docente_especializacion (
+                    especializacion (
+                        id,
+                        nombre
+                    )
+                ),
+                horarios:docente_horario (
+                    horario (
+                        id,
+                        dia,
+                        hora_inicio,
+                        hora_fin
+                    )
+                )
+            `)
+            .eq('id', docente_id)
+            .single();
+
+        if (error) {
+            handleSupabaseError(error, 'Obtener docente');
+        }
+
+        if (!data) {
+            throw new Error('Docente no encontrado');
+        }
+
+        return {
+            success: true,
+            docente: data
+        };
     }
 }
