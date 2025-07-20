@@ -5,7 +5,7 @@ import { supabase } from '../supabase/supabase.client';
 export class ProgramasService {
   async obtenerTodos() {
     const { data, error } = await supabase
-      .from('programas')
+      .from('programa')
       .select('id, nombre')
       .order('id', { ascending: true });
 
@@ -21,7 +21,7 @@ export class ProgramasService {
 
   async crearPrograma(nombre: string) {
     const { data, error } = await supabase
-      .from('programas')
+      .from('programa')
       .insert([{ nombre }]);
 
     if (error || !data) {

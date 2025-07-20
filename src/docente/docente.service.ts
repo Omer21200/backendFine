@@ -121,6 +121,9 @@ export class DocenteService {
       experiencia_anios,
       horas_disponibles,
       activo,
+      horas_asignadas,
+      max_horas_semanales,
+      puede_dar_sabados,
       persona:persona_id (
         id,
         primer_nombre,
@@ -166,6 +169,9 @@ export class DocenteService {
         experiencia_anios,
         horas_disponibles,
         activo,
+        horas_asignadas,
+        max_horas_semanales,
+        puede_dar_sabados,
         persona:persona_id (
           id,
           primer_nombre,

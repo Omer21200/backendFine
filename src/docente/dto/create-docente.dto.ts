@@ -38,6 +38,13 @@ export class CreateDocenteDto {
   @Min(0)
   horas_disponibles: number;
 
+  @IsInt()
+  @Min(0)
+  max_horas_semanales: number;
+
+  @IsBoolean()
+  puede_dar_sabados: boolean;
+
   @IsArray()
   @ArrayNotEmpty()
   @IsUUID('all', { each: true })
@@ -66,6 +73,8 @@ export class UpdateDocenteDto {
   @IsOptional() @IsInt() experiencia_anios?: number;
   @IsOptional() @IsUUID() nivel_ingles_id?: string;
   @IsOptional() @IsInt() horas_disponibles?: number;
+  @IsOptional() @IsInt() max_horas_semanales?: number;
+  @IsOptional() @IsBoolean() puede_dar_sabados?: boolean;
 
   @IsOptional() @IsArray() @IsUUID('all', { each: true }) especializaciones?: string[];
   @IsOptional() @IsArray() @IsUUID('all', { each: true }) horarios?: string[];

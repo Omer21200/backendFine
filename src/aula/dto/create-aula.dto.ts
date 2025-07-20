@@ -7,7 +7,23 @@ export class CreateAulaDto {
 
   @IsString()
   @IsNotEmpty()
+  ubicacion: string;
+
+  @IsString()
+  @IsNotEmpty()
   piso: string;
+
+  @IsString()
+  @IsNotEmpty()
+  tipo_aula: string;
+
+  @IsInt()
+  @IsNotEmpty()
+  edad_minima: number;
+
+  @IsInt()
+  @IsNotEmpty()
+  edad_maxima: number;
 
   @IsInt()
   @Min(1)
@@ -17,9 +33,6 @@ export class CreateAulaDto {
   @IsBoolean()
   para_ninos?: boolean;
 
-  @IsOptional()
-  @IsObject()
-  equipamiento?: Record<string, any>;
 
   @IsOptional()
   @IsString()
@@ -49,10 +62,6 @@ export class UpdateAulaDto {
   para_ninos?: boolean;
 
   @IsOptional()
-  @IsObject()
-  equipamiento?: Record<string, any>;
-
-  @IsOptional()
   @IsBoolean()
   disponible?: boolean;
 
@@ -63,4 +72,20 @@ export class UpdateAulaDto {
   @IsOptional()
   @IsString()
   observaciones?: string;
+
+  @IsOptional()
+  @IsString()
+  tipo_aula?: string;
+
+  @IsOptional()
+  @IsInt()
+  edad_minima?: number;
+
+  @IsOptional()
+  @IsInt()
+  edad_maxima?: number;
+
+  @IsOptional()
+  @IsString()
+  ubicacion?: string;
 } 

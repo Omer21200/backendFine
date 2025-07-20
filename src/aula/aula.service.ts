@@ -13,7 +13,10 @@ export class AulaService {
         piso: dto.piso,
         capacidad: dto.capacidad,
         para_ninos: dto.para_ninos || false,
-        equipamiento: dto.equipamiento || {},
+        tipo_aula: dto.tipo_aula,
+        edad_minima: dto.edad_minima,
+        edad_maxima: dto.edad_maxima,
+        ubicacion: dto.ubicacion,
         observaciones: dto.observaciones
       }])
       .select()
