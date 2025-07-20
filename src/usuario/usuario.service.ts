@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { supabase } from '../supabase/supabase.client';
-import { CreateUserDto } from './dto/create-user.dto';
+import { CreateUserDto, UpdateUserDto } from './dto/create-user.dto';
 import { handleSupabaseError } from '../utils/supabase-error-handler';
 
 function normalizeText(text: string): string {
@@ -117,6 +117,72 @@ export class UsuarioService {
         await supabase.from('persona').delete().eq('id', personaIdCreada);
       }
       handleSupabaseError(error, 'Creación de usuario');
+    }
+  }
+
+  async obtenerUsuarioPorId(uid: string) {
+    const { data, error } = await supabase
+      .from('usuario')
+      .select(`
+        uid,
+        username,
+        activo,
+        rol:rol_id ( nombre ),
+        persona:persona_id (
+          id,
+          primer_nombre,
+          segundo_nombre,
+          primer_apellido,
+          segundo_apellido,
+          cedula,
+          correo,
+          telefono
+        )
+      `)
+      .eq('uid', uid)
+      .single();
+
+    if (error) {
+      handleSupabaseError(error, 'Obtener usuario');
+    }
+
+    return data;
+  }
+
+  async actualizarUsuario(dto: UpdateUserDto) {
+    const { uid, ...datosActualizar } = dto;
+
+    try {
+      // Obtener usuario actual
+      const usuarioActual = await this.obtenerUsuarioPorId(uid);
+      if (!usuarioActual) {
+        throw new Error('Usuario no encontrado');
+      }
+
+      // Actualizar solo datos de persona
+      const datosPersona: any = {};
+      if (datosActualizar.primer_nombre) datosPersona.primer_nombre = datosActualizar.primer_nombre;
+      if (datosActualizar.segundo_nombre !== undefined) datosPersona.segundo_nombre = datosActualizar.segundo_nombre;
+      if (datosActualizar.primer_apellido) datosPersona.primer_apellido = datosActualizar.primer_apellido;
+      if (datosActualizar.segundo_apellido !== undefined) datosPersona.segundo_apellido = datosActualizar.segundo_apellido;
+      if (datosActualizar.cedula) datosPersona.cedula = datosActualizar.cedula;
+      if (datosActualizar.correo) datosPersona.correo = datosActualizar.correo;
+      if (datosActualizar.telefono !== undefined) datosPersona.telefono = datosActualizar.telefono;
+
+      if (Object.keys(datosPersona).length > 0) {
+        const { error: personaError } = await supabase
+          .from('persona')
+          .update(datosPersona)
+          .eq('id', (usuarioActual.persona as any).id);
+
+        if (personaError) {
+          handleSupabaseError(personaError, 'Actualizar datos de persona');
+        }
+      }
+
+      return { message: 'Datos de persona actualizados correctamente' };
+    } catch (error) {
+      handleSupabaseError(error, 'Actualizar datos de persona');
     }
   }
 }
