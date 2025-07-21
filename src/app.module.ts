@@ -8,10 +8,11 @@ import { DocenteModule } from './docente/docente.module';
 import { CatalogoModule } from './catalogo/catalogo.module';
 import { DashboardModule } from './dashboard/dashboard.module';
 import { AulaModule } from './aula/aula.module';
+import { VistasModule } from './vistas/vistas.module';
 
 
 @Module({
-  imports: [ProgramasModule, UsuarioModule, AuthModule, DocenteModule, CatalogoModule, DashboardModule, AulaModule],
+  imports: [ProgramasModule, UsuarioModule, AuthModule, DocenteModule, CatalogoModule, DashboardModule, AulaModule, VistasModule],
   controllers: [AppController],
   providers: [AppService],
 })
