@@ -224,6 +224,32 @@ export class ClaseService {
     };
   }
 
+  async cambiarHorario(id: string, horario: string) {
+    const { data, error } = await supabase
+      .from('clase')
+      .update({ horario_solicitado: horario })
+      .eq('id', id)
+      .select(`
+        *,
+        programa:programa_id (
+          id,
+          nombre,
+          categoria
+        )
+      `)
+      .single();
+
+    if (error) {
+      handleSupabaseError(error, 'Cambiar horario de clase');
+    }
+
+    return {
+      success: true,
+      message: `Horario de clase cambiado a: ${horario}`,
+      clase: data
+    };
+  }
+
   async eliminarClase(id: string) {
     // Verificar que la clase existe
     await this.obtenerClasePorId(id);

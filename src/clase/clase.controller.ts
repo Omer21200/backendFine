@@ -69,6 +69,15 @@ export class ClaseController {
     return this.claseService.cambiarPrioridad(id, body.prioridad);
   }
 
+  @Patch(':id/horario')
+  @HttpCode(200)
+  async cambiarHorario(
+    @Param('id') id: string,
+    @Body() body: { horario: string }
+  ) {
+    return this.claseService.cambiarHorario(id, body.horario);
+  }
+
   @Delete(':id')
   @HttpCode(200)
   async eliminar(@Param('id') id: string) {
