@@ -10,10 +10,10 @@ import { DashboardModule } from './dashboard/dashboard.module';
 import { AulaModule } from './aula/aula.module';
 import { VistasModule } from './vistas/vistas.module';
 import { ClaseModule } from './clase/clase.module';
-
+import { AsignacionModule } from './asignacion/asignacion.module';
 
 @Module({
-  imports: [ProgramasModule, UsuarioModule, AuthModule, DocenteModule, CatalogoModule, DashboardModule, AulaModule, VistasModule, ClaseModule],
+  imports: [ProgramasModule, UsuarioModule, AuthModule, DocenteModule, CatalogoModule, DashboardModule, AulaModule, VistasModule, ClaseModule, AsignacionModule],
   controllers: [AppController],
   providers: [AppService],
 })
