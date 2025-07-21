@@ -9,10 +9,11 @@ import { CatalogoModule } from './catalogo/catalogo.module';
 import { DashboardModule } from './dashboard/dashboard.module';
 import { AulaModule } from './aula/aula.module';
 import { VistasModule } from './vistas/vistas.module';
+import { ClaseModule } from './clase/clase.module';
 
 
 @Module({
-  imports: [ProgramasModule, UsuarioModule, AuthModule, DocenteModule, CatalogoModule, DashboardModule, AulaModule, VistasModule],
+  imports: [ProgramasModule, UsuarioModule, AuthModule, DocenteModule, CatalogoModule, DashboardModule, AulaModule, VistasModule, ClaseModule],
   controllers: [AppController],
   providers: [AppService],
 })
