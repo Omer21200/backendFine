@@ -120,6 +120,31 @@ export class UsuarioService {
     }
   }
 
+  async obtenerTodosUsuarios() {
+    const { data, error } = await supabase
+      .from('usuario')
+      .select(`
+        uid,
+        username,
+        activo,
+        rol:rol_id ( nombre ),
+        persona:persona_id (
+          id,
+          primer_nombre,
+          segundo_nombre,
+          primer_apellido,
+          segundo_apellido,
+          cedula,
+          correo,
+          telefono
+        )
+      `);
+    if (error) {
+      handleSupabaseError(error, 'Obtener todos los usuarios');
+    }
+    return data;
+  }
+
   async obtenerUsuarioPorId(uid: string) {
     const { data, error } = await supabase
       .from('usuario')

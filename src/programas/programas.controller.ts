@@ -5,7 +5,7 @@ import { ProgramasService } from './programas.service';
 export class ProgramasController {
   constructor(private readonly programasService: ProgramasService) {}
 
-   @Get('listar') // GET /programas/listar
+  @Get('listar') // GET /programas/listar
   getAll() {
     return this.programasService.obtenerTodos();
   }

@@ -11,6 +11,11 @@ export class UsuarioController {
     return this.usuarioService.crearUsuario(dto);
   }
 
+  @Get()
+  async obtenerTodos() {
+    return this.usuarioService.obtenerTodosUsuarios();
+  }
+
   @Get(':uid')
   async obtenerPorId(@Param('uid') uid: string) {
     return this.usuarioService.obtenerUsuarioPorId(uid);
