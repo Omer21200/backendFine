@@ -10,6 +10,11 @@ export class ProgramasController {
     return this.programasService.obtenerTodos();
   }
 
+  @Get('resumen') // GET /programas/resumen
+  getResumen() {
+    return this.programasService.obtenerTodos();
+  }
+
   @Post('crear') // POST /programas/crear
   create(@Body() body: { nombre: string }) {
     return this.programasService.crearPrograma(body.nombre);

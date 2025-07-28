@@ -12,7 +12,6 @@ export class AulaService {
         numero: dto.numero,
         piso: dto.piso,
         capacidad: dto.capacidad,
-        para_ninos: dto.para_ninos || false,
         tipo_aula: dto.tipo_aula,
         edad_minima: dto.edad_minima,
         edad_maxima: dto.edad_maxima,

@@ -1,9 +1,9 @@
 import { IsString, IsNotEmpty, IsInt, Min, IsBoolean, IsOptional, IsObject } from 'class-validator';
 
 export class CreateAulaDto {
-  @IsString()
+  @IsInt()
   @IsNotEmpty()
-  numero: string;
+  numero: number;
 
   @IsString()
   @IsNotEmpty()
@@ -29,9 +29,6 @@ export class CreateAulaDto {
   @Min(1)
   capacidad: number;
 
-  @IsOptional()
-  @IsBoolean()
-  para_ninos?: boolean;
 
 
   @IsOptional()
@@ -42,7 +39,7 @@ export class CreateAulaDto {
 export class UpdateAulaDto {
   @IsString()
   @IsNotEmpty()
-  id: string;
+  id: string; // uuid
 
   @IsOptional()
   @IsString()
@@ -58,8 +55,12 @@ export class UpdateAulaDto {
   capacidad?: number;
 
   @IsOptional()
-  @IsBoolean()
-  para_ninos?: boolean;
+  @IsString()
+  created_at?: string;
+
+  @IsOptional()
+  @IsString()
+  updated_at?: string;
 
   @IsOptional()
   @IsBoolean()
