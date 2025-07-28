@@ -1,107 +1,227 @@
+# BackendFine
+
 <p align="center">
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
 </p>
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+## Descripción
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+BackendFine es una aplicación backend desarrollada con [NestJS](https://github.com/nestjs/nest), un framework progresivo de Node.js para construir aplicaciones del lado del servidor eficientes y escalables.
 
-## Description
+Este proyecto incluye:
+- Autenticación JWT
+- Gestión de usuarios y docentes
+- CRUD completo para aulas, clases y programas
+- Sistema de asignación automática de horarios
+- Integración con Supabase como base de datos
+- Vistas de base de datos para dashboards
+- API RESTful completa
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+## Tecnologías Utilizadas
 
-## Project setup
+### Dependencias Principales
+- **@nestjs/common**: ^11.0.1
+- **@nestjs/core**: ^11.0.1
+- **@nestjs/jwt**: ^11.0.0
+- **@nestjs/platform-express**: ^11.0.1
+- **@supabase/supabase-js**: ^2.50.0
+- **class-transformer**: ^0.5.1
+- **class-validator**: ^0.14.2
+- **dotenv**: ^16.5.0
+- **jsonwebtoken**: ^9.0.2
+- **reflect-metadata**: ^0.2.2
+- **rxjs**: ^7.8.1
 
-```bash
-$ npm install
-```
+### Dependencias de Desarrollo
+- **@nestjs/cli**: ^11.0.0
+- **@nestjs/testing**: ^11.0.1
+- **@types/node**: ^22.10.7
+- **typescript**: ^5.7.3
+- **jest**: ^29.7.0
+- **eslint**: ^9.18.0
+- **prettier**: ^3.4.2
 
-## Compile and run the project
+## Configuración del Proyecto
 
-```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
-```
-
-## Run tests
+### Instalación de Dependencias
 
 ```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+npm install
 ```
 
-## Deployment
+### Variables de Entorno
 
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
+Crea un archivo `.env` en la raíz del proyecto con las siguientes variables:
 
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+```env
+SUPABASE_URL=tu_url_de_supabase
+SUPABASE_ANON_KEY=tu_clave_anonima_de_supabase
+JWT_SECRET=tu_secreto_jwt
+```
+
+## Ejecución del Proyecto
+
+### Desarrollo
+```bash
+# Modo desarrollo
+npm run start
+
+# Modo watch (recomendado para desarrollo)
+npm run start:dev
+
+# Modo debug
+npm run start:debug
+```
+
+### Producción
+```bash
+# Compilar
+npm run build
+
+# Ejecutar en producción
+npm run start:prod
+```
+
+## Pruebas
 
 ```bash
-$ npm install -g @nestjs/mau
-$ mau deploy
+# Pruebas unitarias
+npm run test
+
+# Pruebas en modo watch
+npm run test:watch
+
+# Cobertura de pruebas
+npm run test:cov
+
+# Pruebas end-to-end
+npm run test:e2e
 ```
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+## Estructura del Proyecto
 
-## Resources
+```
+src/
+├── auth/           # Autenticación JWT
+├── usuario/        # Gestión de usuarios
+├── docente/        # Gestión de docentes
+├── aula/           # CRUD de aulas
+├── clase/          # CRUD de clases
+├── programas/      # Gestión de programas
+├── catalogo/       # Catálogos del sistema
+├── dashboard/      # Estadísticas del dashboard
+├── vistas/         # Vistas de base de datos
+├── asignacion/     # Algoritmo de asignación
+├── supabase/       # Cliente de Supabase
+└── utils/          # Utilidades
+```
 
-Check out a few resources that may come in handy when working with NestJS:
+## API Endpoints
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+### Autenticación
+- `POST /auth/login` - Iniciar sesión
 
-## Support
+### Usuarios
+- `GET /usuarios/:uid` - Obtener usuario por ID
+- `PATCH /usuarios` - Actualizar datos de usuario
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+### Docentes
+- `GET /docentes` - Listar docentes
+- `POST /docentes` - Crear docente
+- `GET /docentes/:id` - Obtener docente por ID
+- `PATCH /docentes` - Actualizar docente
+- `DELETE /docentes/:id` - Eliminar docente
 
-## Stay in touch
+### Aulas
+- `GET /aulas` - Listar aulas
+- `POST /aulas` - Crear aula
+- `GET /aulas/:id` - Obtener aula por ID
+- `PATCH /aulas` - Actualizar aula
+- `DELETE /aulas/:id` - Eliminar aula (soft delete)
+- `GET /aulas/disponibles` - Listar aulas disponibles
+- `GET /aulas/piso/:piso` - Listar aulas por piso
+- `PATCH /aulas/:id/disponibilidad` - Cambiar disponibilidad
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+### Clases
+- `GET /clases` - Listar clases
+- `POST /clases` - Crear clase
+- `PATCH /clases` - Actualizar clase
+- `PATCH /clases/sin-estado` - Actualizar clase sin cambiar estado
+- `DELETE /clases/:id` - Eliminar clase
 
-## License
+### Dashboard
+- `GET /dashboard/estadisticas` - Estadísticas generales
+- `GET /dashboard/estadisticas/docentes` - Estadísticas de docentes
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+### Vistas
+- `GET /vistas/clases-asignacion` - Vista de clases asignadas
+- `GET /vistas/horario-completo` - Vista de horario completo
+- `GET /vistas/carga-docentes` - Vista de carga de docentes
+- `GET /vistas/ocupacion-aulas` - Vista de ocupación de aulas
 
-## Como crear un componente
+### Asignación
+- `POST /asignacion/resetear` - Resetear ambiente de asignación
+- `POST /asignacion/generar` - Generar asignación automática
 
-- npx nest g module programas
-- npx nest g controller programas
-- npx nest g service programas
+## Comandos Útiles
 
-## Como levantar el proyecto
-- npm run start:dev
+### Crear un Nuevo Componente
+```bash
+# Crear módulo
+npx nest g module nombre-componente
+
+# Crear controlador
+npx nest g controller nombre-componente
+
+# Crear servicio
+npx nest g service nombre-componente
+```
+
+### Formateo y Linting
+```bash
+# Formatear código
+npm run format
+
+# Ejecutar linter
+npm run lint
+```
+
+## Base de Datos
+
+El proyecto utiliza Supabase como base de datos PostgreSQL. Las principales tablas incluyen:
+
+- `usuario` - Usuarios del sistema
+- `persona` - Información personal
+- `docente` - Docentes del instituto
+- `aula` - Aulas disponibles
+- `clase` - Clases programadas
+- `programa` - Programas educativos
+- `asignacion` - Asignaciones de clases
+- `horario` - Horarios disponibles
+
+### Vistas Importantes
+- `dashboard_stats` - Estadísticas para dashboard
+- `vista_clases_asignacion` - Clases con asignaciones
+- `vista_horario_completo` - Horario completo del instituto
+- `vista_carga_docentes` - Carga horaria de docentes
+
+## Funciones de Base de Datos
+
+### Algoritmo de Asignación
+- `resetear_ambiente_asignacion()` - Limpia el ambiente para nueva asignación
+- `generar_asignacion()` - Ejecuta el algoritmo de asignación automática
+
+## Licencia
+
+Este proyecto está bajo la licencia [MIT](LICENSE).
+
+## Soporte
+
+Para soporte y preguntas, puedes:
+- Revisar la [documentación de NestJS](https://docs.nestjs.com)
+- Visitar el [canal de Discord de NestJS](https://discord.gg/G7Qnnhy)
+- Consultar los [cursos oficiales](https://courses.nestjs.com/)
+
+## Autor
+
+Desarrollado por **Omer Benitez**, **Luis Leon** y **Lenin Cuenca** 
