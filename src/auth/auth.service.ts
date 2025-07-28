@@ -1,13 +1,14 @@
 // src/auth/auth.service.ts
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { Injectable, UnauthorizedException, NotFoundException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { supabase } from '../supabase/supabase.client';
+import { SuccessResponseDto } from './dto/error-response.dto';
 
 @Injectable()
 export class AuthService {
   constructor(private readonly jwtService: JwtService) {}
 
-  async login(username: string, password: string) {
+  async login(username: string, password: string): Promise<SuccessResponseDto> {
     type UsuarioConRol = {
       uid: string;
       username: string;
@@ -30,23 +31,58 @@ export class AuthService {
       .eq('username', username)
       .single<UsuarioConRol>();
 
-    if (error || !data) {
-      throw new UnauthorizedException('Usuario o contraseña incorrectos');
+    // Si hay error en la consulta o no se encuentra el usuario
+    if (error) {
+      if (error.code === 'PGRST116') {
+        // Usuario no encontrado
+        throw new NotFoundException({
+          statusCode: 404,
+          message: 'Usuario no encontrado',
+          error: 'Not Found'
+        });
+      }
+      // Otros errores de base de datos
+      throw new UnauthorizedException({
+        statusCode: 500,
+        message: 'Error interno del servidor',
+        error: 'Internal Server Error'
+      });
+    }
+
+    // Si no hay datos (usuario no encontrado)
+    if (!data) {
+      throw new NotFoundException({
+        statusCode: 404,
+        message: 'Usuario no encontrado',
+        error: 'Not Found'
+      });
     }
 
     const rolNombre = data.rol?.nombre;
 
     if (!rolNombre) {
-      throw new UnauthorizedException('El usuario no tiene rol asignado');
+      throw new UnauthorizedException({
+        statusCode: 401,
+        message: 'El usuario no tiene rol asignado',
+        error: 'Unauthorized'
+      });
     }
 
     if (!data.activo) {
-      throw new UnauthorizedException('Usuario inactivo');
+      throw new UnauthorizedException({
+        statusCode: 401,
+        message: 'Usuario inactivo',
+        error: 'Unauthorized'
+      });
     }
 
     // Validar password (recomiendo bcrypt, pero aquí simple comparación)
     if (data.password !== password) {
-      throw new UnauthorizedException('Usuario o contraseña incorrectos');
+      throw new UnauthorizedException({
+        statusCode: 401,
+        message: 'Contraseña incorrecta',
+        error: 'Unauthorized'
+      });
     }
 
     // Crear payload para el token
@@ -59,6 +95,7 @@ export class AuthService {
     const token = this.jwtService.sign(payload);
 
     return {
+      statusCode: 200,
       message: 'Login exitoso',
       token
     };
